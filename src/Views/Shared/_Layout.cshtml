@@ -1,7 +1,10 @@
 ﻿@inject IOptionsSnapshot<BlogSettings> settings
 @inject WebManifest manifest
+@using Miniblog.Core.Utils
 @{
     var host = Context.Request.Scheme + "://" + Context.Request.Host;
+    var req = Context.Request;
+    var isMobile = MobileUtils.IsMobile(req);
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -45,12 +48,15 @@
         </div>
     </header>
 
-    <main itemprop="mainEntity" itemscope itemtype="http://schema.org/Blog">
-        <noscript>
-            <p class="container">Some features of this website do not work as expected when JavaScript is disabled</p>
-        </noscript>
-        @RenderBody()
-    </main>
+    @if (!isMobile) {
+        <main itemprop="mainEntity" itemscope itemtype="http://schema.org/Blog">
+            <noscript>
+                <p class="container">Some features of this website do not work as expected when JavaScript is disabled</p>
+            </noscript>
+            @RenderBody()
+        </main>
+    }
+    
 
     <footer class="sitefooter">
         <div class="container">
