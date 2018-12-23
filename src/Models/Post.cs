@@ -86,6 +86,10 @@ namespace Miniblog.Core.Models
             return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
         }
 
+        public string RenderExcerpt() {
+            return Excerpt;
+        }
+
         public string RenderContent()
         {
             var result = Content;

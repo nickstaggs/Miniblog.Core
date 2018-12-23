@@ -23,7 +23,12 @@
     </header>
 
     <div itemprop="articleBody mainEntityOfPage" cdnify>
-        @Html.Raw(Model.RenderContent())
+        @if(showFullPost) {
+            @Html.Raw(Model.RenderContent());
+        } 
+        else {
+            @Html.Raw(Model.RenderExcerpt());
+        }
     </div>
 
     <footer>
@@ -52,7 +57,7 @@
 @if (showFullPost)
 {
     await Html.RenderPartialAsync("_SocialSharing", Model.Title);
-    await Html.RenderPartialAsync("Comments");
+    <!-- await Html.RenderPartialAsync("Comments"); -->
 
     @section Preload {
         @* This lazy loads the stylesheet in a non-render blocking way *@

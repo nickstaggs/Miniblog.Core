@@ -41,14 +41,14 @@
 </head>
 <body itemscope itemtype="http://schema.org/WebPage">
 
-    <header class="siteheader">
-        <div class="container">
-            <p itemprop="name"><a href="~/">@manifest.Name</a></p>
-            By <span itemprop="author">@settings.Value.Owner</span>
-        </div>
-    </header>
+    @if(isMobile) {
+        <header class="siteheader">
+            <div class="container">
+                <p itemprop="name"><a href="~/">@manifest.Name</a></p>
+                By <span itemprop="author">@settings.Value.Owner</span>
+            </div>
+        </header>
 
-    @if (!isMobile) {
         <main itemprop="mainEntity" itemscope itemtype="http://schema.org/Blog">
             <noscript>
                 <p class="container">Some features of this website do not work as expected when JavaScript is disabled</p>
@@ -56,32 +56,37 @@
             @RenderBody()
         </main>
     }
-    
+    else {
+        <div class="left-toolbar">
+            <div class="avatar-container">
+                <img class="avatar-image" src="~/img/avatar2.png" />
+                <br>
+                
+                <h2>I'm Nick!</h2>
+            </div>
+            
+            <br>
 
-    <footer class="sitefooter">
-        <div class="container">
-            <nav>
-                <ul>
-                    @{
-                        string path = Context.Request.Path;
+            <div class="nav-menu">
+                <a><h3>Projects</h3></a>
 
-                        if (User.Identity.IsAuthenticated)
-                        {
-                            <li><a asp-controller="Blog" asp-action="Edit">New post</a></li>
-                            <li><a href="~/logout/" title="Sign out as administrator">Sign out</a></li>
-                        }
-                        else
-                        {
-                            <li><a href="~/login/?returnUrl=@path" rel="nofollow" title="Sign in as administrator">Sign in</a></li>
-                        }
-                    }
-                </ul>
-            </nav>
-            <p>
-                Powered by <a href="https://github.com/madskristensen/Miniblog.Core" rel="noopener noreferrer" target="_blank">Miniblog.Core</a>
-            </p>
+                <a><h3>Blog</h3></a>
+
+                <a><h3>About</h3></a>
+                
+                <a><h3>CV</h3></a>
+            </div>
         </div>
-    </footer>
+        <div class="right-content">
+            <main itemprop="mainEntity" itemscope itemtype="http://schema.org/Blog">
+                <noscript>
+                    <p class="container">Some features of this website do not work as expected when JavaScript is disabled</p>
+                </noscript>
+                @RenderBody()
+            </main>
+        </div>
+        
+    }
 
     <!-- This lazy loads the stylesheet in a non-render blocking way -->
     <link rel="preload" href="~/css/belowthefold.scss" as="style" />
